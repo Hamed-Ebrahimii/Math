@@ -1,0 +1,78 @@
+/* Reset CSS */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Arial', sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  margin: 0;
+  background: linear-gradient(to right, #6a11cb, #2575fc);
+  color: #fff;
+}
+
+.container {
+  text-align: center;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 20px 40px;
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+button {
+  background-color: #ff4081;
+  color: #fff;
+  border: none;
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+button:hover {
+  background-color: #e73370;
+  transform: translateY(-3px);
+}
+
+.hidden {
+  display: none;
+}
+
+#graph-canvas {
+  border: 2px solid #fff;
+  margin-top: 20px;
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  transition: border-color 0.3s ease;
+}
+
+#graph-canvas:hover {
+  border-color: #ff4081;
+}
+
+#instruction {
+  font-size: 1.2em;
+  margin: 20px 0;
+}
+
+#score {
+  font-size: 1.2em;
+  margin-top: 20px;
+}
