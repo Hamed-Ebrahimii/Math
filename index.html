@@ -3,21 +3,54 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>بازی ریاضی گسسته</title>
-  <link rel="stylesheet" href="./style.css">
+  <title>Discrete Mathematics Graph Game</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #282c34;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+    #game-board {
+      display: none;
+      text-align: center;
+    }
+    .hidden {
+      display: none;
+    }
+    canvas {
+      border: 1px solid #fff;
+      width: 100%;
+      max-width: 400px;
+      height: auto;
+    }
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      margin: 10px;
+      cursor: pointer;
+      width: 90%;
+      max-width: 300px;
+    }
+    #instruction {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <h1>بازی ساختن گراف</h1>
-  <button id="start-game">شروع بازی</button>
-  <div id="game-board" class="hidden">
-    <p id="instruction">گرافی با ویژگی ... بسازید</p>
-    <canvas id="graph-canvas"></canvas>
-    <p id="score">امتیاز: 0</p>
-    <button id="next-level" class="hidden">مرحله بعدی</button>
-  </div>
+<button id="start-game">شروع بازی</button>
+<div id="game-board">
+  <canvas id="graph-canvas"></canvas>
+  <p id="instruction"></p>
+  <button id="next-level" class="hidden">مرحله بعدی</button>
 </div>
-<script src="./src/main.js"></script>
+
 <script>
   document.getElementById('start-game').addEventListener('click', startGame);
   document.getElementById('next-level').addEventListener('click', nextLevel);
@@ -29,40 +62,40 @@
   const levels = [
     {
       nodes: [
-        { id: 1, x: 100, y: 100 },
-        { id: 2, x: 300, y: 100 },
-        { id: 3, x: 500, y: 100 },
-        { id: 4, x: 700, y: 100 }
+        { id: 1, x: 50, y: 50 },
+        { id: 2, x: 150, y: 50 },
+        { id: 3, x: 250, y: 50 },
+        { id: 4, x: 350, y: 50 }
       ],
       edges: [],
       instruction: 'یک مسیر بین گره‌ها ایجاد کنید'
     },
     {
       nodes: [
-        { id: 1, x: 200, y: 200 },
-        { id: 2, x: 400, y: 200 },
-        { id: 3, x: 300, y: 400 },
-        { id: 4, x: 500, y: 400 }
+        { id: 1, x: 100, y: 100 },
+        { id: 2, x: 200, y: 100 },
+        { id: 3, x: 150, y: 200 },
+        { id: 4, x: 250, y: 200 }
       ],
       edges: [],
       instruction: 'یک گراف همبند ایجاد کنید'
     },
     {
       nodes: [
-        { id: 1, x: 100, y: 100 },
-        { id: 2, x: 700, y: 100 },
-        { id: 3, x: 100, y: 500 },
-        { id: 4, x: 700, y: 500 }
+        { id: 1, x: 50, y: 50 },
+        { id: 2, x: 350, y: 50 },
+        { id: 3, x: 50, y: 250 },
+        { id: 4, x: 350, y: 250 }
       ],
       edges: [],
       instruction: 'یک درخت ایجاد کنید'
     },
     {
       nodes: [
-        { id: 1, x: 200, y: 200 },
-        { id: 2, x: 600, y: 200 },
-        { id: 3, x: 200, y: 400 },
-        { id: 4, x: 600, y: 400 }
+        { id: 1, x: 100, y: 100 },
+        { id: 2, x: 300, y: 100 },
+        { id: 3, x: 100, y: 200 },
+        { id: 4, x: 300, y: 200 }
       ],
       edges: [],
       instruction: 'یک گراف دو بخشی ایجاد کنید'
@@ -71,8 +104,8 @@
 
   const canvas = document.getElementById('graph-canvas');
   const ctx = canvas.getContext('2d');
-  canvas.width = 800;
-  canvas.height = 600;
+  canvas.width = 400;
+  canvas.height = 300;
 
   function startGame() {
     document.getElementById('start-game').classList.add('hidden');
@@ -92,15 +125,15 @@
     ctx.clearRect(0, 0, canvas.width, canvas.height);
     nodes.forEach(node => {
       ctx.beginPath();
-      ctx.arc(node.x, node.y, 20, 0, 2 * Math.PI);
+      ctx.arc(node.x, node.y, 10, 0, 2 * Math.PI);
       ctx.fillStyle = selectedNode && selectedNode.id === node.id ? 'rgba(255, 64, 129, 0.8)' : 'rgba(255, 255, 255, 0.8)';
       ctx.fill();
       ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 3;
+      ctx.lineWidth = 2;
       ctx.stroke();
       ctx.fillStyle = '#000';
-      ctx.font = '16px Arial';
-      ctx.fillText(node.id, node.x - 5, node.y + 5);
+      ctx.font = '12px Arial';
+      ctx.fillText(node.id, node.x - 3, node.y + 3);
     });
     drawEdges();
   }
@@ -114,7 +147,7 @@
         ctx.moveTo(nodeA.x, nodeA.y);
         ctx.lineTo(nodeB.x, nodeB.y);
         ctx.strokeStyle = '#ff4081';
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 2;
         ctx.stroke();
       }
     });
@@ -125,7 +158,7 @@
     const rect = canvas.getBoundingClientRect();
     const x = event.clientX - rect.left;
     const y = event.clientY - rect.top;
-    const clickedNode = nodes.find(node => Math.hypot(node.x - x, node.y - y) < 20);
+    const clickedNode = nodes.find(node => Math.hypot(node.x - x, node.y - y) < 10);
     if (clickedNode) {
       if (selectedNode) {
         edges.push([selectedNode.id, clickedNode.id]);
